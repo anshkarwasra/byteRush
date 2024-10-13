@@ -1,34 +1,95 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import Navbar from './components/Navbar'
 import './App.css'
+import PlayListBanner from './components/playListBanner'
+// import InpPage from './components/InputPage'
+import EmojiCard from './components/EmojiCard';
+import PlayBar from './components/PlayBar';
+
 
 function App() {
+  
   const [count, setCount] = useState(0)
-
+  const [background, setbackground] = useState("rgba(0,0,0,0)")
+  const checkBackground =  ()=>{
+    if(background!=="#444444"){
+      setbackground("#444444")
+    }
+  }
+  const emojiMoods = [
+    { emoji: "😊", mood: "Happy" },
+    { emoji: "😢", mood: "Sad" },
+    { emoji: "😡", mood: "Angry" },
+    { emoji: "😴", mood: "Sleepy" },
+    { emoji: "🎉", mood: "Excited" },
+    { emoji: "😎", mood: "Cool" },
+    { emoji: "🤔", mood: "Thoughtful" },
+    { emoji: "🥳", mood: "Celebratory" },
+    { emoji: "😐", mood: "Neutral" },
+    { emoji: "🤯", mood: "Mind-Blown" },
+    { emoji: "😍", mood: "In Love" },
+    { emoji: "😬", mood: "Awkward" },
+    { emoji: "🥶", mood: "Cold" },
+    { emoji: "😇", mood: "Blessed" },
+    { emoji: "🤢", mood: "Disgusted" },
+    { emoji: "😤", mood: "Frustrated" },
+    { emoji: "😃", mood: "Cheerful" },
+    { emoji: "🤗", mood: "Caring" },
+    { emoji: "🥺", mood: "Pleading" },
+    { emoji: "🙃", mood: "Silly" },
+    { emoji: "🤪", mood: "Crazy" },
+    { emoji: "😔", mood: "Down" },
+    { emoji: "😅", mood: "Relieved" },
+    { emoji: "🫠", mood: "Melting" },
+    { emoji: "🥴", mood: "Dizzy" },
+    { emoji: "😈", mood: "Mischievous" }
+  ];
+  
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+   <>
+    {/* <div className="HomePage">
+
+    <Navbar background={background} />
+
+    <h1>THE INQUISITOR</h1>
+    </div>
+    <div className="demo">
+
+        <div className="heading">
+          Our Playlists
+        </div>
+      <div className="grid">
+      {checkBackground()}
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+     
+    </div>
+    <div className="userInputs">
+      <div className="heading" style={{"textAlign":"center",fontFamily:"roboto",color:"white"}}>
+        <h1>Music For Every MOOD!</h1>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' ,backgroundColor:'#222222'}}>
+        {emojiMoods.map((item, index) => (
+          <EmojiCard key={index} emoji={item.emoji} mood={item.mood} condition={true} />
+        ))}
+      </div>
+      <div className="add">
+        <p>add more moods! according to your choice</p>
+      </div>
+      
+    </div> */}
+    <PlayBar/>
+   </>
   )
 }
 

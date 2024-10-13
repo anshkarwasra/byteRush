@@ -1,0 +1,86 @@
+.banner {
+    width: 259px; /* Or a specific width */
+    height: 259px; /* Or a specific height */
+    overflow: hidden;
+    transition:  .5s all ;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .banner img {
+    width: inherit;
+    height:inherit;
+    object-fit:contain; /* Adjust as needed */
+    transition: .5 all;
+
+  }
+
+.banner:hover  img{
+    animation: zoomIn 0.5s   linear 1;
+    margin-top: -120px;
+    margin-left: -120px;
+    height: 500px;
+    width: 500px;
+}
+
+.banner .filter{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: inherit;
+    width: inherit;
+    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    
+     /* background-color: red; */
+    opacity: 0;
+    transition: .5s all;
+    z-index: 2;
+}
+
+.banner:hover  .filter{
+    opacity: 1;
+}
+  
+
+@keyframes zoomIn {
+    from{
+        margin-top: 0px;
+        margin-left: 0px;
+        height: 259px;
+        width: 259px;
+    }
+
+    to{
+        margin-top: -120px;
+    margin-left: -120px;
+    height: 500px;
+    width: 500px;
+    }
+}
+
+.banner::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100px;
+    background-color: white;
+    z-index: 99;
+    display: block;
+}
+
+.banner:hover ~ .banner::before{
+    display: block;
+}
+
+.banner::after{
+    content: "";
+    position: absolute;
+    top: 257px;
+    left: 159px;
+    height: 2px;
+    width: 100px;
+    background-color: white;
+    z-index: 99;
+}
