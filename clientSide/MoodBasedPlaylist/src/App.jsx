@@ -5,18 +5,30 @@ import './App.css'
 import PlayListBanner from './components/playListBanner'
 // import InpPage from './components/InputPage'
 import EmojiCard from './components/EmojiCard';
-import PlayBar from './components/PlayBar';
+import PlayerComponent from './components/PlayBar';
 
 
 function App() {
+  const  [trackId, settrackId] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [background, setbackground] = useState("rgba(0,0,0,0)");
   
-  const [count, setCount] = useState(0)
-  const [background, setbackground] = useState("rgba(0,0,0,0)")
   const checkBackground =  ()=>{
     if(background!=="#444444"){
       setbackground("#444444")
     }
   }
+  const handlePlay = () => {
+    setIsPlaying(true);
+};
+
+const handlePause = () => {
+    setIsPlaying(false);
+};
+
+  const handleTrackId = (trackId)=>{
+    settrackId(trackId)
+  };
   const emojiMoods = [
     { emoji: "😊", mood: "Happy" },
     { emoji: "😢", mood: "Sad" },
@@ -48,9 +60,8 @@ function App() {
   
   return (
    <>
-    {/* <div className="HomePage">
-
-    <Navbar background={background} />
+    <div className="HomePage">
+    <Navbar onPlay={handlePlay} onPause={handlePause} background="#222222" />
 
     <h1>THE INQUISITOR</h1>
     </div>
@@ -80,17 +91,21 @@ function App() {
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' ,backgroundColor:'#222222'}}>
         {emojiMoods.map((item, index) => (
-          <EmojiCard key={index} emoji={item.emoji} mood={item.mood} condition={true} />
+          <EmojiCard key={index} emoji={item.emoji} mood={item.mood} condition={true} onTrackSelect={handleTrackId} />
         ))}
       </div>
       <div className="add">
         <p>add more moods! according to your choice</p>
       </div>
       
-    </div> */}
-    <PlayBar/>
+    </div>
+    <PlayerComponent isPlaying={isPlaying} trackId={trackId} />
    </>
   )
 }
 
 export default App
+
+
+
+

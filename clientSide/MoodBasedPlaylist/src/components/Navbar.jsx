@@ -10,10 +10,12 @@ import play from "./assets/play.svg"
 
 
 
-const Navbar = (props) => {
+const Navbar = ({ onPlay,onPause}) => {
+    
+
     return (
         <>
-        <nav style={{background: props.background}} >
+        <nav style={{background: "#222222"}} >
             <div className="logo">
             <img src={logo} alt="" srcset="" />
             </div>
@@ -29,12 +31,14 @@ const Navbar = (props) => {
             <div className="line"></div>
             <div className="icons">
                 <i><img src={search} alt="" srcset="" /></i>
-                <i><img src={play} alt="" srcset="" /></i>
+                <button  onClick={onPlay} style={{"background":"none","border":"none"}} >
+                    <img src={play} alt="" srcset="" style={{cursor:"pointer"}} />
+                    </button>
             </div>
             </div>
         </nav>
         </>
-    )
-}
+    );
+};
 
 export default Navbar

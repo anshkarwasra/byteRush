@@ -1,52 +1,32 @@
-// Playbar.js
-import React from 'react';
-import { useState } from 'react';
-import './Playbar.css'; // Optional CSS for styling
-import play from "./assets/play.svg"
-import prev from "./assets/prev.svg"
-import next from "./assets/next.svg"
-import volume from "./assets/volume.svg"
+import React, { useEffect, useState } from 'react';
 
+const PlayerComponent = ({ isPlaying,trackId }) => {
 
-const Playbar = () => {
-    const [songInfo, setsongInfo] = useState("")
+    const [iframeSrc, setIframeSrc] = useState('https://open.spotify.com/embed/track/7ouMYWpwJ422jRcDASZB7P');
 
-  return (
-    <div className="playbar">
-      {/* Seekbar */}
-      <div className="seekbar">
-        <div className="circle"></div>
-      </div>
+    useEffect(() => {
+        if (isPlaying) {
+            setIframeSrc(`https://open.spotify.com/embed/track/${trackId}`); // Replace with your track URI
 
-      {/* Abovebar Section */}
-      <div className="abovebar">
-        {songInfo}
-        <div className="songinfo">
-          {/* Add song title and artist info here */}
+        } else {
+            setIframeSrc(''); // Clear iframe src to simulate stop
+        }
+    }, [isPlaying]);
+
+    return (
+        <div>
+            {iframeSrc && (
+                <iframe
+                    style={{"width":"100%",position:'fixed',bottom:0,left:0}}
+                    src={iframeSrc}
+                    height="80"
+                    frameBorder="0"
+                    allow="encrypted-media"
+                    title="Spotify Player"
+                ></iframe>
+            )}
         </div>
-
-        {/* Song Control Buttons */}
-        <div className="songbuttons">
-          <img width="35" id="previous" src={prev} alt="Previous" />
-          <img width="35" id="play" src={play} alt="Play/Pause" />
-          <img width="35" id="next" src={next} alt="Next" />
-        </div>
-
-        {/* Time and Volume Section */}
-        <div className="timevol">
-          <div className="songtime">
-            {/* Add current time / total duration */}
-          </div>
-          <div className="volume">
-            <img width="25" src={volume} alt="Volume" />
-            <div className="range">
-              <input type="range" name="volume" min="0" max="100" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default Playbar;
+export default PlayerComponent;

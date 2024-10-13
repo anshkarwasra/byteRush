@@ -5,10 +5,10 @@ import './EmojiCard.css'; // Optional CSS for styling
 import heart from "./assets/heart.svg"
 import plus from "./assets/plus.svg"
 import cross from "./assets/cross.svg"
+import axios from 'axios';
 
 
-
-const EmojiCard = ({ emoji, mood,condition }) => {
+const EmojiCard = ({ emoji, mood,condition,onTrackSelect }) => {
   const [showComponent, setShowComponent] = useState(condition);
   
   if (showComponent) {
@@ -21,7 +21,35 @@ const EmojiCard = ({ emoji, mood,condition }) => {
         <div className="logo" style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"20px",width:"inherit"}}>
         <img src={heart} alt=""  />
         <button onClick={ () => setShowComponent(false)} style={{"background":"none","border":"none"}}><img src={cross} alt=""   style={{cursor:"pointer"}}  /></button>
-        <img src={plus} alt=""  />
+        <button style={{"background":"none","border":"none"}}> <img src={plus} alt=""   style={{cursor:"pointer"}} onClick={
+          ()=>{
+            let MoodData = axios.toFormData({
+              "mood":mood,
+            })
+            axios(
+              {
+                method:"post",
+                url:"http://127.0.0.1:5000/get_recommendations",
+                data:MoodData,
+                headers:{
+                  "Content-Type":"multipart/form-data"
+                }
+              }
+            ).then(res=>{
+              const data = res.data.tracks
+              const trackUris = data.map(track => track.uri);
+              console.log(trackUris);
+              trackUris.forEach(element => {
+                const trackId = element.split(":")[2];
+                onTrackSelect(trackId);
+              });
+
+            }).catch(err=>{
+              console.log(err);
+            })
+          }
+
+        }  /></button>
         </div>
       </div>
       </>
