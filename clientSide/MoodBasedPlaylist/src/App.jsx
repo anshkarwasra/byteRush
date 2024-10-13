@@ -12,6 +12,7 @@ function App() {
   const  [trackId, settrackId] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [background, setbackground] = useState("rgba(0,0,0,0)");
+  const [invisibility, setinvisibility] = useState(true)
   
   const checkBackground =  ()=>{
     if(background!=="#444444"){
@@ -29,6 +30,12 @@ const handlePause = () => {
   const handleTrackId = (trackId)=>{
     settrackId(trackId)
   };
+
+  const handleInvisibility = ()=>{
+    console.log(invisibility)
+    setinvisibility(!invisibility)
+  }
+
   const emojiMoods = [
     { emoji: "😊", mood: "Happy" },
     { emoji: "😢", mood: "Sad" },
@@ -57,23 +64,56 @@ const handlePause = () => {
     { emoji: "🥴", mood: "Dizzy" },
     { emoji: "😈", mood: "Mischievous" }
   ];
-  const playListCovers = [
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image04.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image05.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image06.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image07.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image08.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image09.jpg",
-    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image10.jpg"
+  // const playListCovers = [
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image04.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image05.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image06.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image07.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image08.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image09.jpg",
+  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image10.jpg"
 
-  ]
+  // ]
+  
+  const [visibleSidebar, setVisibleSidebar] = useState(null);
+  const handlePlaylistClick = (playlistId) => {
+    setVisibleSidebar(visibleSidebar === playlistId ? null : playlistId);
+  };
+
+  const playListCovers = [
+    { id: 1, image: "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg", mood: 'Happy', songs: [
+      "Whispers in the Rain",
+      "Chasing Midnight Dreams",
+      "Echoes of Tomorrow",
+      "Lost Between Stars",
+      "Flicker of Hope",
+      "Dancing Through Shadows"
+    ] },
+    { id: 2, image:  "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg", mood: 'Sad', songs: [
+      "Whispers in the Rain",
+      "Chasing Midnight Dreams",
+      "Echoes of Tomorrow",
+      "Lost Between Stars",
+      "Flicker of Hope",
+      "Dancing Through Shadows"
+    ]  },
+    { id: 3, image: "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg", mood: 'Energetic', songs: [
+      "Whispers in the Rain",
+      "Chasing Midnight Dreams",
+      "Echoes of Tomorrow",
+      "Lost Between Stars",
+      "Flicker of Hope",
+      "Dancing Through Shadows"
+    ]  },
+    // ... more playlists
+  ];
   
   return (
    <>
-    {/* <div className="HomePage">
+    <div className="HomePage">
     <Navbar onPlay={handlePlay} onPause={handlePause} background="#222222" />
 
     <h1>THE INQUISITOR</h1>
@@ -83,16 +123,25 @@ const handlePause = () => {
         <div className="heading">
           Our Playlists
         </div>
-      <div className="grid">
-      {checkBackground()}
-      {
-        playListCovers.map(
-          (item,index)=>(
-            <PlayListBanner image={item} key={index} />
-          )
-        )
-      }
+        <div className="grid">
+        {checkBackground()}
+        {playListCovers.map((playlist) => (
+          <PlayListBanner 
+            key={playlist.id}
+            image={playlist.image} 
+            onClick={() => handlePlaylistClick(playlist.id)}
+          />
+        ))}
       </div>
+      {playListCovers.map((playlist) => (
+        <SideBar 
+          key={playlist.id}
+          invisibility={visibleSidebar !== playlist.id}
+          mood={playlist.mood}
+          songs={playlist.songs}
+          onClose={() => setVisibleSidebar(null)}
+        />
+      ))}
      
     </div>
     <div className="userInputs">
@@ -109,8 +158,7 @@ const handlePause = () => {
       </div>
       
     </div>
-    <PlayerComponent isPlaying={isPlaying} trackId={trackId} /> */}
-    <SideBar/>
+    <PlayerComponent isPlaying={isPlaying} trackId={trackId} />
    </>
   )
 }
