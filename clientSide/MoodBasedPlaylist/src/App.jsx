@@ -6,7 +6,7 @@ import PlayListBanner from './components/playListBanner'
 // import InpPage from './components/InputPage'
 import EmojiCard from './components/EmojiCard';
 import PlayerComponent from './components/PlayBar';
-
+import SideBar from './components/SideBar';
 
 function App() {
   const  [trackId, settrackId] = useState(null);
@@ -57,10 +57,23 @@ const handlePause = () => {
     { emoji: "🥴", mood: "Dizzy" },
     { emoji: "😈", mood: "Mischievous" }
   ];
+  const playListCovers = [
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image04.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image05.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image06.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image07.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image08.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image09.jpg",
+    "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image10.jpg"
+
+  ]
   
   return (
    <>
-    <div className="HomePage">
+    {/* <div className="HomePage">
     <Navbar onPlay={handlePlay} onPause={handlePause} background="#222222" />
 
     <h1>THE INQUISITOR</h1>
@@ -72,16 +85,13 @@ const handlePause = () => {
         </div>
       <div className="grid">
       {checkBackground()}
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
-      <PlayListBanner image="https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg" />
+      {
+        playListCovers.map(
+          (item,index)=>(
+            <PlayListBanner image={item} key={index} />
+          )
+        )
+      }
       </div>
      
     </div>
@@ -99,7 +109,8 @@ const handlePause = () => {
       </div>
       
     </div>
-    <PlayerComponent isPlaying={isPlaying} trackId={trackId} />
+    <PlayerComponent isPlaying={isPlaying} trackId={trackId} /> */}
+    <SideBar/>
    </>
   )
 }
