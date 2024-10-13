@@ -12,7 +12,7 @@ const SideBar = ({ invisibility, mood, songs, onClose,onPlay }) => {
     return (
       <div className="sideBar" style={{left: invisibility ? "-755px" : "0"}}>
         <div className="heading">Your {mood} playlist</div>
-        <button onClick={onClose} style={{background:"none",border:"none", cursor:"pointer"}}><img src={close}  /></button>
+        <button onClick={onClose} style={{background:"none",border:"none", cursor:"pointer",position:"absolute",right:0,top:0}}><img src={close}  /></button>
         <div className="songUl">
           {songs.map((song, index) => (
             <div className="song" key={index}>

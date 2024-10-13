@@ -119,6 +119,8 @@ const handlePause = () => {
             key={playlist.id}
             image={playlist.image} 
             onClick={() => handlePlaylistClick(playlist.id)}
+            mood={playlist.mood}
+
           />
         ))}
       </div>

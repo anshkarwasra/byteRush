@@ -3,7 +3,7 @@ import "./playListBanner.css";
 
 // TODO:make a filter fucntion
 
-const PlayListBanner = ({ image,onClick }) => {
+const PlayListBanner = ({ image,onClick,mood }) => {
   return (
     
     <button onClick={onClick} >
@@ -11,7 +11,7 @@ const PlayListBanner = ({ image,onClick }) => {
       <div className="banner">
       <img src={image} alt="Playlist banner" /> 
       <div className="filter">
-        <p style={{color:"white",textAlign: "center",fontFamily:"roboto",fontSize:25,marginTop:75}}>your title goes here</p>
+        <p style={{color:"white",textAlign: "center",fontFamily:"roboto",fontSize:25,marginTop:75}}>{mood}</p>
       </div>
     </div>
     </button>
