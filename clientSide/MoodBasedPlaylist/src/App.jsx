@@ -13,7 +13,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [background, setbackground] = useState("rgba(0,0,0,0)");
   const [invisibility, setinvisibility] = useState(true)
-  
+  const  [songData, setsongData] = useState(null)
   const checkBackground =  ()=>{
     if(background!=="#444444"){
       setbackground("#444444")
@@ -29,11 +29,12 @@ const handlePause = () => {
 
   const handleTrackId = (trackId)=>{
     settrackId(trackId)
+    console.log(typeof(trackId))
   };
 
-  const handleInvisibility = ()=>{
-    console.log(invisibility)
-    setinvisibility(!invisibility)
+
+  const handleSongData = (songData)=>{
+    setsongData(songData);
   }
 
   const emojiMoods = [
@@ -64,53 +65,41 @@ const handlePause = () => {
     { emoji: "🥴", mood: "Dizzy" },
     { emoji: "😈", mood: "Mischievous" }
   ];
-  // const playListCovers = [
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image04.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image05.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image06.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image07.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image08.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image09.jpg",
-  //   "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image10.jpg"
 
-  // ]
   
   const [visibleSidebar, setVisibleSidebar] = useState(null);
   const handlePlaylistClick = (playlistId) => {
     setVisibleSidebar(visibleSidebar === playlistId ? null : playlistId);
   };
 
-  const playListCovers = [
-    { id: 1, image: "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image02.jpg", mood: 'Happy', songs: [
-      "Whispers in the Rain",
-      "Chasing Midnight Dreams",
-      "Echoes of Tomorrow",
-      "Lost Between Stars",
-      "Flicker of Hope",
-      "Dancing Through Shadows"
-    ] },
-    { id: 2, image:  "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image01.jpg", mood: 'Sad', songs: [
-      "Whispers in the Rain",
-      "Chasing Midnight Dreams",
-      "Echoes of Tomorrow",
-      "Lost Between Stars",
-      "Flicker of Hope",
-      "Dancing Through Shadows"
-    ]  },
-    { id: 3, image: "https://rascalsthemes.com/demo/spectra/demo1/wp-content/uploads/2014/08/portfolio-image03.jpg", mood: 'Energetic', songs: [
-      "Whispers in the Rain",
-      "Chasing Midnight Dreams",
-      "Echoes of Tomorrow",
-      "Lost Between Stars",
-      "Flicker of Hope",
-      "Dancing Through Shadows"
-    ]  },
-    // ... more playlists
-  ];
-  
+  const [playListCovers, setPlayListCovers] = useState([]);
+  const [playListId, setPlayListId] = useState(playListCovers.length + 1);
+  const parseSongResponse = (songData) => {
+    setPlayListId((prevId) => prevId + 1); // Increment playlist ID
+
+    const songArr = []
+    songData.forEach(element => {
+      songArr.push(
+        {
+          name:element.name,
+          id:element.id,
+        }
+      )
+    });
+
+
+    const newPlayList = {
+      id: playListId,
+      image: songData[0].album.images[0].url,
+      mood: songData[0].album.name,
+      songs: songArr,
+    };
+
+    // Update the playlist state by creating a new array
+    setPlayListCovers((prevCovers) => [...prevCovers, newPlayList]);
+
+    console.log("Updated Playlists:", playListCovers);
+  };
   return (
    <>
     <div className="HomePage">
@@ -140,6 +129,7 @@ const handlePause = () => {
           mood={playlist.mood}
           songs={playlist.songs}
           onClose={() => setVisibleSidebar(null)}
+          onPlay={handleTrackId}
         />
       ))}
      
@@ -150,7 +140,7 @@ const handlePause = () => {
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' ,backgroundColor:'#222222'}}>
         {emojiMoods.map((item, index) => (
-          <EmojiCard key={index} emoji={item.emoji} mood={item.mood} condition={true} onTrackSelect={handleTrackId} />
+          <EmojiCard key={index} emoji={item.emoji} mood={item.mood} condition={true} onTrackSelect={handleTrackId} onMoodSelect ={handleSongData} songParser={parseSongResponse} />
         ))}
       </div>
       <div className="add">
@@ -158,7 +148,7 @@ const handlePause = () => {
       </div>
       
     </div>
-    <PlayerComponent isPlaying={isPlaying} trackId={trackId} />
+    <PlayerComponent isPlaying={isPlaying} trackId={trackId}  />
    </>
   )
 }

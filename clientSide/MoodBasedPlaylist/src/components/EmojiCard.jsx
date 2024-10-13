@@ -8,7 +8,7 @@ import cross from "./assets/cross.svg"
 import axios from 'axios';
 
 
-const EmojiCard = ({ emoji, mood,condition,onTrackSelect }) => {
+const EmojiCard = ({ emoji, mood,condition,onTrackSelect,onMoodSelect,songParser }) => {
   const [showComponent, setShowComponent] = useState(condition);
   
   if (showComponent) {
@@ -37,6 +37,8 @@ const EmojiCard = ({ emoji, mood,condition,onTrackSelect }) => {
               }
             ).then(res=>{
               const data = res.data.tracks
+              onMoodSelect(data);
+              songParser(data);
               const trackUris = data.map(track => track.uri);
               console.log(trackUris);
               trackUris.forEach(element => {
